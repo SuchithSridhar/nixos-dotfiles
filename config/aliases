@@ -1,0 +1,324 @@
+# =============================================================
+#                                                  
+#   █████████   █████████                          
+#  ███░░░░░███ ███░░░░░███  Suchith Sridhar        
+# ░███    ░░░ ░███    ░░░   
+# ░░█████████ ░░█████████   https://suchicodes.com 
+#  ░░░░░░░░███ ░░░░░░░░███  https://github.com/suchithsridhar
+#  ███    ░███ ███    ░███  
+# ░░█████████ ░░█████████                            
+#  ░░░░░░░░░   ░░░░░░░░░                            
+#                                                    
+# =============================================================
+# This file contains the common aliases used by me
+# stored at ~/.config/aliases
+# =============================================================
+
+# ==== Core Aliases ====
+
+alias cd="z"
+
+# ==== Flac-relevant aliases ====
+
+alias flac-cd="cd ~/Programming/Flac/"
+alias flac-start="export FLASK_SECRET_KEY='test'; cd-flac; python run.py"
+alias flac-ssh="ssh root@flac-inc.ca"
+
+# ==== Isla-relevant aliases ====
+
+alias isla-ssh="ssh root@islatechnologies.com"
+
+# ==== Suchiblog-relevant aliases ====
+
+alias suchicodes-restart='ssh suchicodes.com -f "/home/suchi/restart-server.sh"'
+alias suchicodes-root-sshfs='sshfs root@suchicodes.com:/ /mnt/remote-suchicodes'
+alias suchicodes-suchi-sshfs='sshfs suchi@suchicodes.com:/home/suchi/ /mnt/remote-suchicodes'
+
+# ==== astrax-relevant aliases ====
+
+alias astrax-sshfs-local="sshfs suchi@192.168.4.46:/home/suchi /mnt/astrax"
+alias asfl="astrax-sshfs-local"
+alias astrax-ssh-local='ssh suchi@192.168.4.46'
+alias asl="astrax-ssh-local"
+alias astrax-ssh='ssh suchi@suchicodes.com -p 2334'
+alias astrax-sshfs='sshfs suchi@suchicodes.com:/home/suchi -p 2334 /mnt/astrax'
+
+# ==== bernum-relevant aliases ====
+
+alias bernum-sshfs-local="sshfs suchi@192.168.0.207:/home/suchi /mnt/bernum"
+alias bernum-ssh-local='ssh suchi@192.168.0.207'
+alias bernum-ssh='ssh suchi@suchicodes.com -p 2333'
+alias bernum-sshfs='sshfs suchi@suchicodes.com:/home/suchi -p 2333 /mnt/bernum'
+
+# ==== DAL Aliases ====
+
+# alias st60='cd /home/suchi/DAL/Win-2023/stat-2060'
+alias ml51='z /home/suchi/DAL/Win-2024/csci-3151'
+alias pl37='z /home/suchi/DAL/Win-2024/csci-3137'
+alias se30='z /home/suchi/DAL/Win-2024/csci-3130'
+alias wc72='z /home/suchi/DAL/Win-2024/csci-3172'
+alias ds17='z /home/suchi/DAL/Win-2024/csci-4117'
+alias mt40='z /home/suchi/DAL/Win-2024/math-2040'
+
+alias wc72-rsync='rsync -azhP --delete /home/suchi/Sync/DAL/Win-2024/csci-3172/test-directory/ khajjayam@timberlea.cs.dal.ca:/users/cs/khajjayam/test-directory/'
+
+alias vishi-rsync='rsync -azhP --delete /home/suchi/Programming/goGetters/generated/ suchi@suchicodes.com:/home/suchi/GoGetters/'
+
+alias daloslab='ssh khajjayam@csci3120.cs.dal.ca'
+alias daloslab-sshfs='sshfs khajjayam@csci3120.cs.dal.ca:/users/cs/khajjayam /mnt/csci3120'
+alias dallab='ssh khajjayam@timberlea.cs.dal.ca'
+alias dallab-sshfs='sshfs khajjayam@timberlea.cs.dal.ca:/users/cs/khajjayam /mnt/timberlea'
+alias dallab-public-sshfs='sshfs khajjayam@timberlea.cs.dal.ca:/users/webhome/khajjayam/ /mnt/timberlea-public-home'
+
+function dalgitconfig(){
+    echo "Setting local username and email for git"
+    git config --local user.name "Suchith Sridhar Khajjayam"
+    git config --local user.email "suchith.sridhar@dal.ca"
+}
+
+function wc72-pull() {
+    ssh khajjayam@timberlea.cs.dal.ca -f "
+        cd public_html/csci3172/ && 
+        git pull --ff && 
+        find . -type d -exec chmod 755 {} + && 
+        find . -type f -exec chmod 644 {} +"
+}
+
+alias unblabfs="sshfs ssridha1@id415m41.cs.unb.ca:/home1/ugrads/ssridha1 /mnt/UNBLab"
+alias unbvpn="sudo openfortivpn -c ~/UNB/unb-vpn.conf"
+alias unblab="ssh ssridha1@id415m41.cs.unb.ca"
+
+# ==== Package manager aliases ====
+
+alias pacman="sudo pacman"
+
+alias ls="eza -l --group-directories-first"
+alias downloadVid="youtube-dl --external-downloader axel --external-downloader-args '-n 10 -a'"
+alias downloadSong="youtube-dl -x --embed-thumbnail --audio-format mp3"
+
+
+# ==== FZF aliases ====
+
+function findForFZF () {
+    if [ ! -d "$1" ]; then
+	echo "invalid directory"
+	exit 1
+    fi
+
+    find "$1" -maxdepth 8 -type d ! -path "*/node_modules/*" ! -path "*/.*" ! -path "*__*__*" 2>/dev/null
+}
+
+function findForFZFHome () {
+    directories=`find /home/suchi/ -maxdepth 1 -type d ! -path "*/.*" ! -path "/home/suchi/" ! -path "/home/suchi/go"`
+    
+    while IFS= read -r dir; do
+	findForFZF "$dir"
+    done <<< "$directories"
+}
+
+alias fv='v $(find . -maxdepth 8 -type f ! -path "*/node_modules/*" ! -path "*/.*" | fzf)'
+alias fcd='z $(findForFZF ./  | fzf)'
+alias dcd='z $(findForFZF /home/suchi/DAL/ | fzf)'
+alias hcd='z $(findForFZFHome /home/suchi/ | fzf)'
+
+# ==== General Aliases ====
+
+alias cpwd="pwd |  tr -d '\n' | xclip -sel c"
+alias ccd='cd "$(xclip -sel c -o)"'
+alias ssf="setsid -f"
+alias dnd="dragon-drop -x -a"
+alias pdf="setsid -f zathura"
+alias pdf-o="setsid -f okular"
+
+alias r="ranger"
+alias v="nvim"
+alias lazyvim="NVIM_APPNAME=lazyvim nvim"
+alias sv="NVIM_APPNAME=suchivim nvim"
+alias lg="lazygit"
+
+alias abspath="readlink -f"
+alias g="googler --url-handler w3m"
+alias find-du="pwd; du -sh * 2>/dev/null | grep \"G\W\""
+
+alias ec="edit-config.sh"
+alias es="edit-script.sh"
+
+alias ldw='last-download'
+alias ldm='last-download-move'
+
+alias pacman-game="myman"
+
+alias camera-output="mplayer tv://device=/dev/video01 -vf mirror"
+
+# Servers
+
+alias mount-google-drive="setsid -f rclone mount 'GoogleDrive:' /mnt/GoogleDrive"
+
+function mkdircd(){
+    mkdir "$1"
+    z "$1"
+}
+
+# ==== C Programming ====
+
+function crun(){
+    gcc -Wall -o /tmp/compileRunTest $1 && /tmp/compileRunTest "${@:2}"
+}
+
+function cpprun(){
+    g++ -Wall -o /tmp/compileRunTest $1 && /tmp/compileRunTest "${@:2}"
+}
+
+# ==== Prolog ====
+
+function prolog_run() {
+    if [ ! -f "$1" ]; then
+        echo "\"$1\" was not found."
+        return 1
+    fi
+    swipl -s "$1" -t halt -q
+}
+
+# ==== Java Programming ===
+
+function jrun(){
+    if [ ! -f "$1" ]; then
+        echo "\"$1\" was not found."
+        return "1"
+    fi
+    filename=`basename $1 | cut -d '.' -f1`
+    currentPath=`pwd`
+    javac -d /tmp $1 && cd /tmp
+    if [ "$?" != "0" ] && return "1"
+    if [ ! -f "$filename.class" ]; then
+        echo "Class has to be same name as file for jrun to work."
+        return "1"
+    fi
+    cd /tmp
+    java $filename "${@:2}"
+    EXIT_CODE="$?"
+    rm /tmp/$filename.class
+    cd $currentPath
+    
+    return EXIT_CODE
+}
+
+
+# ================
+
+# ========= Functions ==========
+
+# Copy contents of a file
+function cpcont {
+    cat $1 | xclip -sel c
+}
+
+function cqdp {
+    local qdp_path=`qdp menu`
+    if [[ -d "$qdp_path" ]]; then
+	cd "$qdp_path" 
+    fi
+}
+
+function ranger {
+	local IFS=$'\t\n'
+	local tempfile="$(mktemp -t tmp.XXXXXX)"
+	local ranger_cmd=(
+		command
+		ranger
+		--cmd="map Q chain shell echo %d > "$tempfile"; quitall"
+	)
+	
+	${ranger_cmd[@]} "$@"
+	if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+		\cd -- "$(cat "$tempfile")" || return
+	fi
+	command rm -f -- "$tempfile" 2>/dev/null
+}
+
+function extract () {
+  if [ -f "$1" ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+countdown() {
+    start="$(( $(date '+%s') + $1))"
+    while [ $start -ge $(date +%s) ]; do
+        time="$(( $start - $(date +%s) ))"
+        printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+        sleep 0.1
+    done
+}
+
+stopwatch() {
+    start=$(date +%s)
+    while true; do
+        time="$(( $(date +%s) - $start))"
+        printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S:%T.%6N)"
+        sleep 0.1
+    done
+}
+
+# Lists the last downloaded file in the "$HOME/Downloads" directory
+# Can specify a count: last-download 2
+# to list the last 2 downloaded files.
+function last-download() {
+    COUNT="$1"
+    if [ -z "$COUNT" ]; then
+	COUNT=1
+    fi
+    \ls -Art $HOME/Downloads | tail -n $COUNT
+}
+
+# Works similar to last-download but rather than listing the files
+# it moves it to the current directory.
+# can specify destination directory:
+# last-download-move 1 some-directory/
+function last-download-move() {
+    COUNT="$1"
+    LOCATION="$2"
+
+    if [ -z "$COUNT" ]; then
+	COUNT=1
+    fi
+
+    if [ -z "$LOCATION" ]; then
+	LOCATION="./"
+    fi
+
+    \ls -Art $HOME/Downloads | tail -n $COUNT | \
+	while read line; do
+	    mv "$HOME/Downloads/$line" "$LOCATION"
+	done
+}
+
+
+update-system() {
+    # Get the current date in YYYY-MM-DD format
+    local current_date=$(date +%F)
+
+    # Create a timeshift snapshot with the desired comment
+    sudo timeshift --create --comments "Before update $current_date (pacman)"
+
+    # Update the system
+    sudo pacman -Syyu
+}
