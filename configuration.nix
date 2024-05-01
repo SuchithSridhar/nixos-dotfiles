@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-stable, ... }:
 
 {
   imports =
@@ -87,43 +87,49 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    neovim
-    wget
-    kitty
-    alacritty
-    killall
-    zoxide
-    pfetch
-    brave
-    firefox
-    chromium
-    dunst
-    delta
-    bat
-    ranger
-    neofetch
-    htop
+  environment.systemPackages = 
+    (with pkgs; [
+      git
+      vim
+      neovim
+      wget
+      kitty
+      alacritty
+      killall
+      zoxide
+      pfetch
+      brave
+      firefox
+      chromium
+      dunst
+      delta
+      bat
+      ranger
+      neofetch
+      htop
 
-    obs-studio
-    ffmpeg
+      obs-studio
+      ffmpeg
 
-    waybar
-    libnotify
-    wl-clipboard
-    wofi
+      waybar
+      libnotify
+      wl-clipboard
+      wofi
+
+      nerdfonts
+      polybar
+      nitrogen
+      picom
+      rofi
+      xclip
+      arandr
+  ])
+
+  ++
+
+  (with pkgs-stable; [
     swww
-
-    nerdfonts
-    polybar
-    nitrogen
-    picom
-    rofi
-    xclip
-    arandr
-  ];
+  ]);
 
   programs = {
     thunar.enable = true;
