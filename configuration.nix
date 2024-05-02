@@ -89,41 +89,21 @@
   # $ nix search wget
   environment.systemPackages = 
     (with pkgs; [
-      git
-      vim
-      neovim
-      wget
-      kitty
-      alacritty
-      killall
-      zoxide
-      pfetch
-      brave
-      firefox
-      chromium
-      dunst
-      delta
-      bat
-      ranger
-      neofetch
-      htop
 
-      obs-studio
-      ffmpeg
+      git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
+      unzip inetutils inotify-tools qrencode ffmpeg fzf
 
-      waybar
-      libnotify
-      wl-clipboard
-      wofi
+      gcc gnumake clang zig python3 go nodejs rustc cargo
 
-      nerdfonts
-      polybar
-      nitrogen
-      picom
-      rofi
-      xclip
-      arandr
-  ])
+      brave firefox chromium qutebrowser
+
+      dunst delta bat ranger neofetch htop
+
+      obs-studio ffmpeg tesseract tesseract-data-eng
+
+      waybar libnotify wl-clipboard wofi wlogout hyprlock
+
+      nerdfonts polybar nitrogen picom rofi xclip arandr ])
 
   ++
 
@@ -133,9 +113,16 @@
 
   programs = {
     thunar.enable = true;
+    thunar.plugins = with pkgs.xfce; [
+    	thunar-archive-plugin
+	thunar-volman
+    ];
     dconf.enable = true;
     zsh.enable = true;
   };
+
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

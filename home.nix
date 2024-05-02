@@ -69,6 +69,29 @@
     EDITOR = "nvim";
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Materia-dark";
+      package = pkgs.materia-theme;
+    };
+    cursorTheme = {
+      name = "Vanilla-DMZ";
+      package = pkgs.vanilla-dmz;
+    };
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome.adwaita-icon-theme;
+    };
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+  };
+
+
   programs.bash = {
     enable = true;
   };
@@ -104,6 +127,11 @@
 
   programs.zoxide.enable = true;
   programs.eza.enable = true;
+  programs.eza.icons = true;
+
+  services.syncthing = {
+    enable = true;
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
