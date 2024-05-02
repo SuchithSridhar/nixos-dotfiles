@@ -67,6 +67,7 @@
   #
   home.sessionVariables = {
     EDITOR = "nvim";
+    GOPATH = ".local/go";
   };
 
   gtk = {
