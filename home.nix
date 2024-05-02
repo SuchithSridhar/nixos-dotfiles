@@ -160,7 +160,10 @@
       init = {
         defaultBranch = "main";
       };
-      gpg.format = "ssh";
+      gpg = {
+        format = "ssh";
+        ssh.allowedSignersFile = "/home/suchi/.ssh/allowed_signers";
+      };
     };
 
     signing = {
