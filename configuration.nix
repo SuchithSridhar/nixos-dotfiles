@@ -91,7 +91,7 @@
     (with pkgs; [
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
-      unzip inetutils inotify-tools qrencode ffmpeg fzf
+      unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 
