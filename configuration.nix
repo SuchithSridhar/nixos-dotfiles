@@ -99,7 +99,7 @@
 
       dunst delta bat ranger neofetch htop
 
-      obs-studio ffmpeg tesseract tesseract-data-eng
+      obs-studio ffmpeg tesseract
 
       waybar libnotify wl-clipboard wofi wlogout hyprlock
 
