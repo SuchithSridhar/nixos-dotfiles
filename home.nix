@@ -17,6 +17,7 @@
   # environment.
   home.packages = with pkgs; [
     figlet lolcat grim slurp hyprshot
+    tmsu
 
     (python3.withPackages (ps: with ps; [
       numpy
@@ -122,6 +123,53 @@
     history.path = "${config.xdg.dataHome}/zsh/history";
   };
 
+  programs.git = {
+    enable = true;
+    userName = "Suchith Sridhar";
+    userEmail = "suchith.sridhar@gmail.com";
+
+    aliases = {
+      staash = "stash --all";
+      tree = "log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\"";
+    };
+
+    includes = [
+      {
+        condition = "gitdir:/home/suchi/DAL/";
+        contents = {
+          user = {
+            email = "suchith.sridhar@dal.ca";
+            name = "Suchith Sridhar Khajjayam";
+          };
+        };
+      }
+      {
+        condition = "gitdir:/home/suchi/Sync/DAL/";
+        contents = {
+          user = {
+            email = "suchith.sridhar@dal.ca";
+            name = "Suchith Sridhar Khajjayam";
+          };
+        };
+      }
+    ];
+
+    delta.enable = true;
+
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+      gpg.format = "ssh";
+    };
+
+    signing = {
+      key = "/home/suchi/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
+  };
+
+  programs.gh.enable = true;
   programs.zoxide.enable = true;
   programs.eza.enable = true;
   programs.eza.icons = true;
