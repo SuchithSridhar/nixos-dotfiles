@@ -1,0 +1,50 @@
+#!/bin/usr/env bash
+# Author: Suchith Sridhar
+# Website: https://suchicodes.com/
+# Example of fonts: https://github.com/xero/figlet-fonts/blob/master/Examples.md
+
+FONT_BASE="$HOME/.local/share/custom-share/figlet-fonts"
+
+case "$1" in
+    "1")
+        FONT="DOS Rebel.flf"
+        ;;
+    "2")
+        FONT="3d.flf"
+        ;;
+    "3")
+        FONT="ANSI Regular.flf"
+        ;;
+    "4")
+        FONT="ANSI Shadow.flf"
+        ;;
+    "5")
+        FONT="Banner3.flf"
+        ;;
+    "6")
+        FONT="Basic.flf"
+        ;;
+    "7")
+        FONT="Bloody.flf"
+        ;;
+    "8")
+        FONT="Cyberlarge.flf"
+        ;;
+    "9")
+        FONT="Cybermedium.flf"
+        ;;
+    "10")
+        FONT="Delta Corps Priest 1.flf"
+        ;;
+    *)
+        FONT="DOS Rebel.flf"
+        ;;
+esac
+
+if [[ "$3" == "" ]] && [[ "$2" == "" ]]; then
+    figlet "$1" -f "$FONT_BASE/$FONT"
+elif [[ "$3" == "" ]]; then
+    figlet "$2" -f "$FONT_BASE/$FONT"
+else
+    figlet "$2" -f "$FONT_BASE/$FONT" -w "$3"
+fi

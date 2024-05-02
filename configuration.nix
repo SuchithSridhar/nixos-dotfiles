@@ -91,7 +91,8 @@
     (with pkgs; [
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
-      unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs
+      unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs acpi mpg123
+      alsa-utils scrot xclip
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 
@@ -99,9 +100,9 @@
 
       dunst delta bat ranger neofetch htop
 
-      obs-studio ffmpeg tesseract
+      obs-studio ffmpeg tesseract gotify-cli
 
-      waybar libnotify wl-clipboard wofi wlogout hyprlock
+      waybar libnotify wl-clipboard wofi wlogout hyprlock wlr-randr
 
       nerdfonts polybar nitrogen picom rofi xclip arandr ])
 

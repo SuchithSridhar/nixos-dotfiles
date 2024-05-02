@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# wc with labels
+file=$1
+echo "File: $file"
+echo "Lines: $(wc -l < "$file")"
+echo "Words: $(wc -w < "$file")"
+echo "Characters: $(wc -m < "$file")"
+echo "Bytes: $(wc -c < "$file")"
+
