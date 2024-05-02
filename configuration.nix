@@ -92,7 +92,7 @@
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
       unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs acpi mpg123
-      alsa-utils scrot xclip
+      alsa-utils xclip
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 

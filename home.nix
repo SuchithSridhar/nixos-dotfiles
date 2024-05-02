@@ -16,8 +16,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    figlet
-    lolcat
+    figlet lolcat scrot flameshot
 
     (python3.withPackages (ps: with ps; [
       numpy
