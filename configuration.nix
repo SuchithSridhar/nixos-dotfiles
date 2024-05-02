@@ -103,6 +103,7 @@
       obs-studio ffmpeg tesseract gotify-cli
 
       waybar libnotify wl-clipboard wofi wlogout hyprlock wlr-randr
+      xdg-desktop-portal xdg-desktop-portal-gtk
 
       nerdfonts polybar nitrogen picom rofi xclip arandr ])
 

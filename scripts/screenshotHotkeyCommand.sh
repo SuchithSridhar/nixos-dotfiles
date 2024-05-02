@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Author: Suchith Sridhar
 # Website: https://suchicodes.com/
 #
 # Purpose: Take screenshots in multiple ways and
 # copy said screenshot to the clipboard.
 #
-# Dependencies: flameshot, scrot, wl-clipboard
+# Dependencies: grim, slurp, wl-clipboard
 
 # Usage: ./<script name> <option>
 #   Options:
@@ -21,12 +21,9 @@
 #
 #    Temporary: Saves screenshot as "a_screenshot.png"
 #    Permanent: Saves screenshot with timestamp.
-#       
-
 
 # Folder to save screenshots to
 base_folder="$HOME/Pictures/ScreenShots/"
-
 
 # These make the screenshot a "permanent" screenshot
 if echo "qwero" | grep -q $1 ; then
@@ -41,22 +38,23 @@ fi
 
 # Select a region of the screen for the screenshot
 if echo "qa" | grep -q $1 ; then
-    flameshot gui -r > "${output}"
+    slurp | grim -g - $output
 
 # Screenshot of the window in focus
 elif echo "ws" | grep -q $1 ; then
-    scrot -ub $base_folder"temp.png"
-    mv -f $base_folder"temp.png" $output
+    # Hyprland does not support taking screenshot of single window directly, use area select
+    notify-send "Hyprland" "Select window manually."
+    slurp | grim -g - $output
 
 # Screenshot of the current monitor
 elif echo "ed" | grep -q $1 ; then
-    flameshot screen -r > "$output"
+    grim -g "$(slurp -o)" $output
 
 # Screenshot of all the monitors
 elif echo "rf" | grep -q $1 ; then
-    flameshot full -r > "$output"
+    grim $output
 
-# Convert the last temporary screenshot to a permanent 
+# Convert the last temporary screenshot to a permanent
 elif echo "o" | grep -q $1 ; then
     cp "$HOME/Pictures/ScreenShots/a_screenshot.png" "$output"
 fi

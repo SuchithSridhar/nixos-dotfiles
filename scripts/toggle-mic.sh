@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Author: Suchith Sridhar
 # Website: https://suchicodes.com/
 #
