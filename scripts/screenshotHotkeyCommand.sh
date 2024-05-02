@@ -3,62 +3,62 @@
 # Website: https://suchicodes.com/
 #
 # Purpose: Take screenshots in multiple ways and
-# copy said screenshot to the clipboard.
+# copy said screenshot to the clipboard using Hyprshot.
 #
-# Dependencies: grim, slurp, wl-clipboard
+# Dependencies: hyprshot, wl-clipboard
 
 # Usage: ./<script name> <option>
 #   Options:
-#       - q: temporary with gui selector
+#       - q: temporary with gui selector (region)
 #       - w: temporary of currently focused window
 #       - e: temporary of current monitor
-#       - r: temporary of all displays (as one screenshot)
+#       - r: temporary of all displays (not directly supported, treated as current monitor)
 #
-#       - a: permanent with gui selector
+#       - a: permanent with gui selector (region)
 #       - s: permanent of currently focused window
 #       - d: permanent of current monitor
-#       - f: permanent of all displays (as one screenshot)
+#       - f: permanent of all displays (not directly supported, treated as current monitor)
 #
 #    Temporary: Saves screenshot as "a_screenshot.png"
 #    Permanent: Saves screenshot with timestamp.
 
 # Folder to save screenshots to
-base_folder="$HOME/Pictures/ScreenShots/"
+base_folder="$HOME/Pictures/Screenshots/"
 
-# These make the screenshot a "permanent" screenshot
+# Determine if it's a permanent or temporary screenshot
 if echo "qwero" | grep -q $1 ; then
-    output="$base_folder"$(date +"ss_%y-%m-%d__%H-%M-%S(%3N)").png
-
-# These make the screenshot a "temporary" screenshot
+    # Permanent screenshot
+    filename=$(date +"ss_%y-%m-%d__%H-%M-%S(%3N)").png
 elif echo "asdf" | grep -q $1 ; then
-    output="$base_folder""a_screenshot.png"
+    # Temporary screenshot
+    filename="a_screenshot.png"
 else
-    exit
+    echo "Invalid command"
+    exit 1
 fi
 
-# Select a region of the screen for the screenshot
-if echo "qa" | grep -q $1 ; then
-    slurp | grim -g - $output
+output="$base_folder$filename"
 
-# Screenshot of the window in focus
-elif echo "ws" | grep -q $1 ; then
-    # Hyprland does not support taking screenshot of single window directly, use area select
-    notify-send "Hyprland" "Select window manually."
-    slurp | grim -g - $output
+# Take screenshot based on the input option
+case $1 in
+    q|a)  # Region selection
+        hyprshot -m region -o "$base_folder" -f "$filename"
+        ;;
+    w|s)  # Currently focused window
+        hyprshot -m window -c -o "$base_folder" -f "$filename"
+        ;;
+    e|d)  # Current monitor
+        hyprshot -m output -c -o "$base_folder" -f "$filename"
+        ;;
+    r|f)  # All displays (treated as current monitor)
+        hyprshot -m output -o "$base_folder" -f "$filename"
+        ;;
+    *)    # Invalid option
+        echo "Invalid option: $1"
+        exit 1
+        ;;
+esac
 
-# Screenshot of the current monitor
-elif echo "ed" | grep -q $1 ; then
-    grim -g "$(slurp -o)" $output
-
-# Screenshot of all the monitors
-elif echo "rf" | grep -q $1 ; then
-    grim $output
-
-# Convert the last temporary screenshot to a permanent
-elif echo "o" | grep -q $1 ; then
-    cp "$HOME/Pictures/ScreenShots/a_screenshot.png" "$output"
-fi
-
-# Copy the screenshot to the clipboard
-wl-copy < $output
-notify-send "Screenshot Saved" $output
+# Notification
+notify-send "Screenshot Saved" "$output"
+wl-copy < "$output"

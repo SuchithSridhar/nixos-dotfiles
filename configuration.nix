@@ -92,7 +92,7 @@
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
       unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs acpi mpg123
-      alsa-utils xclip
+      alsa-utils xclip brightnessctl
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 
@@ -100,7 +100,7 @@
 
       dunst delta bat ranger neofetch htop
 
-      obs-studio ffmpeg tesseract gotify-cli
+      obs-studio ffmpeg tesseract gotify-cli xournalpp
 
       waybar libnotify wl-clipboard wofi wlogout hyprlock wlr-randr
       xdg-desktop-portal xdg-desktop-portal-gtk
