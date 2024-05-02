@@ -22,6 +22,7 @@
     (python3.withPackages (ps: with ps; [
       numpy
       requests
+      pandas
     ]))
   ];
 
