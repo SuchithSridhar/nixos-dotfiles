@@ -21,6 +21,7 @@
         inherit system;
         modules = [ ./configuration.nix ];
         specialArgs = {
+          inherit lib;
           inherit pkgs-stable;
         };
       };

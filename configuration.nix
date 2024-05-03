@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-stable, ... }:
+{ config, lib, pkgs, pkgs-stable, ... }:
 
 {
   imports =
@@ -92,7 +92,7 @@
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
       unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs acpi mpg123
-      alsa-utils xclip brightnessctl
+      alsa-utils xclip brightnessctl jq
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 
@@ -100,9 +100,9 @@
 
       dunst delta bat ranger neofetch htop
 
-      obs-studio ffmpeg tesseract gotify-cli xournalpp
+      obs-studio ffmpeg tesseract gotify-cli xournalpp swaylock-effects
 
-      waybar libnotify wl-clipboard wofi wlogout hyprlock wlr-randr
+      waybar libnotify wl-clipboard wofi wlogout wlr-randr
       xdg-desktop-portal xdg-desktop-portal-gtk
 
       nerdfonts polybar nitrogen picom rofi xclip arandr ])
@@ -112,6 +112,12 @@
   (with pkgs-stable; [
     swww
   ]);
+
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
 
   programs = {
     thunar.enable = true;
