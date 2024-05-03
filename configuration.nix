@@ -92,7 +92,7 @@
 
       git vim neovim wget kitty alacritty killall zoxide pfetch lxappearance mpv
       unzip inetutils inotify-tools qrencode ffmpeg fzf sshfs acpi mpg123
-      alsa-utils xclip brightnessctl jq
+      alsa-utils xclip brightnessctl jq libqalculate
 
       gcc gnumake clang zig python3 go nodejs rustc cargo
 
@@ -105,7 +105,7 @@
       waybar libnotify wl-clipboard wofi wlogout wlr-randr
       xdg-desktop-portal xdg-desktop-portal-gtk
 
-      nerdfonts polybar nitrogen picom rofi xclip arandr ])
+      polybar nitrogen picom rofi xclip arandr ])
 
   ++
 
@@ -118,6 +118,10 @@
       auth include login
     '';
   };
+
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
 
   programs = {
     thunar.enable = true;
