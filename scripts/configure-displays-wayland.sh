@@ -14,81 +14,64 @@
 # A script to configure displays in Hyprland (Wayland).
 # =============================================================
 
-# Utility function to turn off unnecessary displays
-turn_off_unneeded_displays() {
-    all_displays=$(wlr-randr | grep "connected" | cut -d" " -f1)
-    local intended_displays=("$@")
-    for display in $all_displays; do
+# Check for active monitors and disable unneeded ones
+disable_unneeded_displays() {
+    sleep 3
+    active_monitors=$(hyprctl monitors all | grep 'Monitor' | awk '{print $2}' | tr -d '()')
+    for monitor in $active_monitors; do
         local needed=false
-        for intended_display in "${intended_displays[@]}"; do
-            if [[ $display == $intended_display ]]; then
+        for intended_monitor in "$@"; do
+            if [[ $monitor == $intended_monitor ]]; then
                 needed=true
                 break
             fi
         done
         if [[ $needed == false ]]; then
-            wlr-randr --output $display --off
+            hyprctl keyword monitor $monitor,disable
         fi
     done
 }
 
 case "$1" in
-    # Single display
+    # Single display configurations
     edp)
-        turn_off_unneeded_displays "eDP-1"
-        wlr-randr \
-            --output eDP-1 --mode 1920x1080 --pos 0,0
+        hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1
+        disable_unneeded_displays "eDP-1"
         ;;
     hdmi)
-        turn_off_unneeded_displays "HDMI-A-1"
-        wlr-randr \
-            --output HDMI-A-1 --mode 1920x1080 --pos 0,0
+        hyprctl keyword monitor HDMI-A-1,1920x1080@60,0x0,1
+        disable_unneeded_displays "HDMI-A-1"
         ;;
     usbc)
-        turn_off_unneeded_displays "DP-1"
-        wlr-randr \
-            --output DP-1 --mode 1920x1080 --pos 0,0
+        hyprctl keyword monitor DP-1,1920x1080@60,0x0,1
+        disable_unneeded_displays "DP-1"
         ;;
 
-    # Two Horizontal Displays
+    # Dual monitor configurations
     edp-hdmi)
-        turn_off_unneeded_displays "eDP-1" "HDMI-A-1"
-        wlr-randr \
-            --output eDP-1 --mode 1920x1080 --pos 0,0 \
-            --output HDMI-A-1 --mode 1920x1080 --pos 1920,0
-        ;;
-    edp-hdmi-alt)
-        turn_off_unneeded_displays "eDP-1" "HDMI-A-1"
-        wlr-randr \
-            --output eDP-1 --mode 1920x1080 --pos 0,0 \
-            --output HDMI-A-1 --mode 1920x1080 --pos 1920,0
+        hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1
+        hyprctl keyword monitor HDMI-A-1,1920x1080@60,1920x0,1
+        disable_unneeded_displays "eDP-1" "HDMI-A-1"
         ;;
     edp-usbc)
-        turn_off_unneeded_displays "eDP-1" "DP-1"
-        wlr-randr \
-            --output eDP-1 --mode 1920x1080 --pos 0,0 \
-            --output DP-1 --mode 1920x1080 --pos 1920,0
+        hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1
+        hyprctl keyword monitor DP-1,1920x1080@60,1920x0,1
+        disable_unneeded_displays "eDP-1" "DP-1"
         ;;
     hdmi-usbc)
-        turn_off_unneeded_displays "HDMI-A-1" "DP-1"
-        wlr-randr \
-            --output HDMI-A-1 --mode 1920x1080 --pos 0,0 \
-            --output DP-1 --mode 1920x1080 --pos 1920,0
+        hyprctl keyword monitor HDMI-A-1,1920x1080@60,0x0,1
+        hyprctl keyword monitor DP-1,1920x1080@60,1920x0,1
+        disable_unneeded_displays "HDMI-A-1" "DP-1"
         ;;
 
-    # Triple displays
+    # Triple monitor configurations
     edp-hdmi-usbc)
-        turn_off_unneeded_displays "HDMI-A-1" "DP-1" "eDP-1"
-        wlr-randr \
-            --output eDP-1 --mode 1920x1080 --pos 0,0 \
-            --output HDMI-A-1 --mode 1920x1080 --pos 1920,0 \
-            --output DP-1 --mode 1920x1080 --pos 3840,0
+        hyprctl keyword monitor eDP-1,1920x1080@60,0x0,1
+        hyprctl keyword monitor HDMI-A-1,1920x1080@60,1920x0,1
+        hyprctl keyword monitor DP-1,1920x1080@60,3840x0,1
+        disable_unneeded_displays "eDP-1" "HDMI-A-1" "DP-1"
         ;;
     *)
         echo "Invalid option for configuring displays"
         ;;
 esac
-
-sleep 1
-
-hyprctl reload
