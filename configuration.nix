@@ -98,9 +98,9 @@
 
       brave firefox chromium qutebrowser
 
-      dunst delta bat ranger neofetch htop
+      dunst delta bat ranger neofetch htop zathura
 
-      obs-studio ffmpeg tesseract gotify-cli xournalpp swaylock-effects
+      obs-studio ffmpeg tesseract gotify-cli xournalpp swaylock-effects gimp
 
       waybar libnotify wl-clipboard wofi wlogout wlr-randr
       xdg-desktop-portal xdg-desktop-portal-gtk
